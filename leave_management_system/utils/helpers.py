@@ -1,5 +1,7 @@
-
 import uuid
+from datetime import datetime
 
 def generate_request_id():
-    return "REQ-"+str(uuid.uuid4())[:6].upper()
+    uid = str(uuid.uuid4()).replace("-", "")[:6].upper()
+    date_part = datetime.now().strftime("%d%m")
+    return f"REQ-{date_part}-{uid}"

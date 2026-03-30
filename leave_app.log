@@ -1,51 +1,88 @@
-2026-03-18 12:03:59,277 - INFO - HOD LOGIN SUCCESS | manoj.patil@sscoetjalgaon.ac.in
-2026-03-18 12:03:59,436 - INFO - Fetched all leave records
-2026-03-18 12:03:59,436 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:04:04,399 - INFO - Fetched all leave records
-2026-03-18 12:04:04,523 - INFO - Analytics displayed successfully
-2026-03-18 12:04:04,524 - INFO - Fetched all leave records
-2026-03-18 12:04:04,525 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:04:16,168 - INFO - Fetched all leave records
-2026-03-18 12:04:16,168 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:04:25,616 - INFO - Fetched all leave records
-2026-03-18 12:04:25,617 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:13:11,711 - WARNING - Unauthorized access attempt to HOD Dashboard
-2026-03-18 12:13:31,223 - INFO - HOD LOGIN SUCCESS | manoj.patil@sscoetjalgaon.ac.in
-2026-03-18 12:13:31,322 - INFO - Fetched all leave records
-2026-03-18 12:13:31,323 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:13:45,688 - INFO - Fetched all leave records
-2026-03-18 12:13:45,804 - INFO - Analytics displayed successfully
-2026-03-18 12:13:45,806 - INFO - Fetched all leave records
-2026-03-18 12:13:45,806 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:16:58,736 - WARNING - Unauthorized access attempt to HOD Dashboard
-2026-03-18 12:17:08,811 - INFO - LOGIN SUCCESS | faculty | Faculty
-2026-03-18 12:18:25,532 - WARNING - Unauthorized access attempt to Faculty Dashboard
-2026-03-18 12:18:35,465 - INFO - LOGIN SUCCESS | faculty | Faculty
-2026-03-18 12:18:41,799 - INFO - Fetched all leave records
-2026-03-18 12:18:53,462 - INFO - Fetched all leave records
-2026-03-18 12:26:21,694 - WARNING - Unauthorized access attempt to Faculty Dashboard
-2026-03-18 12:26:25,348 - WARNING - Unauthorized access attempt to Faculty Dashboard
-2026-03-18 12:26:38,190 - INFO - LOGIN SUCCESS | faculty | Faculty
-2026-03-18 12:26:44,253 - INFO - faculty logged out from Faculty
-2026-03-18 12:27:02,234 - INFO - HOD LOGIN SUCCESS | manoj.patil@sscoetjalgaon.ac.in
-2026-03-18 12:27:02,341 - INFO - Fetched all leave records
-2026-03-18 12:27:02,341 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:27:13,257 - INFO - Fetched all leave records
-2026-03-18 12:27:13,365 - INFO - Analytics displayed successfully
-2026-03-18 12:27:13,366 - INFO - Fetched all leave records
-2026-03-18 12:27:13,367 - INFO - HOD manoj.patil@sscoetjalgaon.ac.in accessed dashboard
-2026-03-18 12:27:26,169 - INFO - manoj.patil@sscoetjalgaon.ac.in logged out from HOD
-2026-03-18 12:27:27,760 - WARNING - Unauthorized access attempt to Principal Dashboard
-2026-03-18 12:27:41,371 - INFO - LOGIN SUCCESS | principal | Principal
-2026-03-18 12:27:41,475 - INFO - Fetched all leave records
-2026-03-18 12:27:41,475 - INFO - Principal principal accessed dashboard
-2026-03-18 12:27:47,342 - INFO - Fetched all leave records
-2026-03-18 12:27:47,453 - INFO - Analytics displayed successfully
-2026-03-18 12:27:47,454 - INFO - Fetched all leave records
-2026-03-18 12:27:47,454 - INFO - Principal principal accessed dashboard
-2026-03-18 12:30:04,258 - WARNING - Unauthorized access attempt to Principal Dashboard
-2026-03-18 12:30:16,584 - INFO - LOGIN SUCCESS | faculty | Faculty
-2026-03-18 12:31:04,520 - WARNING - Unauthorized access attempt to Faculty Dashboard
-2026-03-18 12:31:16,327 - WARNING - Unauthorized access attempt to Faculty Dashboard
-2026-03-18 12:31:17,501 - WARNING - Unauthorized access attempt to HOD Dashboard
-2026-03-18 12:31:19,314 - WARNING - Unauthorized access attempt to Principal Dashboard
+2026-03-30 11:46:22,804 - ERROR - Error inserting leave: table leaves has no column named days
+2026-03-30 11:51:25,090 - ERROR - Error inserting leave: Binding 1 has no name, but you supplied a dictionary (which has only names).
+2026-03-30 12:00:28,612 - INFO - Fetched all leave records
+2026-03-30 12:55:56,532 - INFO - Fetched all leave records
+2026-03-30 12:55:57,579 - INFO - Fetched all leave records
+2026-03-30 12:55:58,692 - INFO - Fetched leave | ReqID: 32b4f809
+2026-03-30 12:55:58,692 - INFO - Processing HOD_APPROVE | ReqID: 32b4f809
+2026-03-30 12:56:02,305 - INFO - Fetched leave | ReqID: 32b4f809
+2026-03-30 12:56:02,305 - INFO - Processing HOD_REJECT | ReqID: 32b4f809
+2026-03-30 12:58:07,214 - INFO - Fetched all leave records
+2026-03-30 12:58:08,205 - INFO - Fetched all leave records
+2026-03-30 12:59:45,271 - INFO - Fetched all leave records
+2026-03-30 13:03:29,414 - INFO - Fetched all leave records
+2026-03-30 14:40:57,925 - INFO - Fetched all leave records
+2026-03-30 14:41:02,035 - INFO - Fetched all leave records
+2026-03-30 14:41:08,507 - INFO - Fetched all leave records
+2026-03-30 14:41:22,443 - INFO - Fetched all leave records
+2026-03-30 14:42:41,396 - INFO - Fetched all leave records
+2026-03-30 14:42:44,871 - INFO - Fetched all leave records
+2026-03-30 14:42:45,114 - INFO - Fetched all leave records
+2026-03-30 14:42:45,321 - INFO - Fetched all leave records
+2026-03-30 14:42:45,521 - INFO - Fetched all leave records
+2026-03-30 14:42:48,019 - INFO - Fetched all leave records
+2026-03-30 14:42:48,667 - INFO - Fetched all leave records
+2026-03-30 14:42:48,868 - INFO - Fetched all leave records
+2026-03-30 14:42:49,048 - INFO - Fetched all leave records
+2026-03-30 14:42:49,241 - INFO - Fetched all leave records
+2026-03-30 14:42:49,441 - INFO - Fetched all leave records
+2026-03-30 14:59:43,723 - INFO - Fetched all leave records
+2026-03-30 15:02:30,204 - INFO - Fetched all leave records
+2026-03-30 15:02:39,011 - INFO - Fetched all leave records
+2026-03-30 15:02:39,450 - INFO - Fetched all leave records
+2026-03-30 15:02:39,660 - INFO - Fetched all leave records
+2026-03-30 15:02:39,833 - INFO - Fetched all leave records
+2026-03-30 15:02:40,009 - INFO - Fetched all leave records
+2026-03-30 15:02:40,207 - INFO - Fetched all leave records
+2026-03-30 15:03:22,117 - INFO - Fetched all leave records
+2026-03-30 15:04:17,285 - INFO - Fetched all leave records
+2026-03-30 15:04:41,697 - INFO - Fetched all leave records
+2026-03-30 15:07:53,269 - INFO - Fetched all leave records
+2026-03-30 15:07:54,276 - INFO - Fetched all leave records
+2026-03-30 15:11:23,005 - INFO - Fetched all leave records
+2026-03-30 15:13:15,603 - INFO - Fetched all leave records
+2026-03-30 15:13:16,731 - INFO - Fetched all leave records
+2026-03-30 15:13:16,931 - INFO - Fetched all leave records
+2026-03-30 15:13:17,145 - INFO - Fetched all leave records
+2026-03-30 15:13:17,313 - INFO - Fetched all leave records
+2026-03-30 15:13:26,517 - INFO - Fetched all leave records
+2026-03-30 15:13:26,881 - INFO - Fetched all leave records
+2026-03-30 15:13:27,097 - INFO - Fetched all leave records
+2026-03-30 15:13:27,314 - INFO - Fetched all leave records
+2026-03-30 15:13:27,521 - INFO - Fetched all leave records
+2026-03-30 15:13:27,721 - INFO - Fetched all leave records
+2026-03-30 15:13:27,929 - INFO - Fetched all leave records
+2026-03-30 15:13:28,129 - INFO - Fetched all leave records
+2026-03-30 15:13:28,379 - INFO - Fetched all leave records
+2026-03-30 15:16:13,572 - INFO - Fetched all leave records
+2026-03-30 15:16:14,308 - INFO - Fetched all leave records
+2026-03-30 15:16:14,505 - INFO - Fetched all leave records
+2026-03-30 15:16:14,697 - INFO - Fetched all leave records
+2026-03-30 15:22:17,045 - INFO - Fetched all leave records
+2026-03-30 15:22:17,748 - INFO - Fetched all leave records
+2026-03-30 15:22:17,955 - INFO - Fetched all leave records
+2026-03-30 15:26:21,428 - INFO - Fetched all leave records
+2026-03-30 15:29:13,718 - INFO - Fetched all leave records
+2026-03-30 15:29:14,460 - INFO - Fetched all leave records
+2026-03-30 15:29:14,675 - INFO - Fetched all leave records
+2026-03-30 15:32:12,013 - INFO - Fetched all leave records
+2026-03-30 15:38:36,633 - INFO - Fetched all leave records
+2026-03-30 15:38:50,637 - INFO - Fetched all leave records
+2026-03-30 15:38:51,235 - INFO - Fetched all leave records
+2026-03-30 15:38:51,441 - INFO - Fetched all leave records
+2026-03-30 15:38:51,665 - INFO - Fetched all leave records
+2026-03-30 15:38:51,881 - INFO - Fetched all leave records
+2026-03-30 15:40:30,913 - INFO - Fetched all leave records
+2026-03-30 15:40:37,770 - INFO - Fetched leave | ReqID: 74277a6c
+2026-03-30 15:40:37,770 - INFO - Processing HOD_APPROVE | ReqID: 74277a6c
+2026-03-30 16:49:26,494 - INFO - Fetched all leave records
+2026-03-30 17:05:45,948 - INFO - Fetched all leave records
+2026-03-30 17:05:51,308 - INFO - Fetched leave | ReqID: 580bf5f4
+2026-03-30 17:05:51,308 - INFO - Processing HOD_APPROVE | ReqID: 580bf5f4
+2026-03-30 17:05:54,450 - INFO - Fetched leave | ReqID: 580bf5f4
+2026-03-30 17:05:54,450 - INFO - Processing HOD_APPROVE | ReqID: 580bf5f4
+2026-03-30 17:05:54,463 - ERROR - Approval Error: 'from'
+2026-03-30 17:05:56,471 - INFO - Fetched all leave records
+2026-03-30 17:09:45,250 - INFO - Fetched all leave records
+2026-03-30 17:25:47,035 - INFO - Fetched all leave records
+2026-03-30 17:26:19,127 - INFO - Fetched all leave records

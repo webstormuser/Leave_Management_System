@@ -1,5 +1,5 @@
 HOD_EMAILS = [
-    "manoj.patil@college.edu",
+    "manoj.patil@sscoetjalgaon.ac.in",
     "punase.pankaj@sscoetjalgaon.ac.in",
     "thakur.sandeep@sscoetjalgaon.ac.in",
     "ansari.mujtahid@sscoetjalgaon.ac.in",

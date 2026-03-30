@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>📋 Faculty Dashboard</h2>
+
+    <div class="nav-right">
+        <span>{{ user }}</span>
+        <a href="/logout"><button class="logout-btn">Logout</button></a>
+    </div>
+</div>
+
+<div class="main-container">
+
+    <div class="glass-card">
+
+        <h3>📝 Apply for Leave</h3>
+
+        <form id="leaveForm">
+
+        <!-- ROW 1 -->
+        <div class="form-row">
+
+            <div>
+                <label>Department</label>
+                <select id="department" onchange="updateFaculty()"></select>
+            </div>
+
+            <div>
+                <label>Name</label>
+                <select id="name" onchange="autoFillEmail()"></select>
+            </div>
+
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="form-row">
+
+            <div>
+                <label>Designation</label>
+                <select id="designation">
+                    <option>Assistant Professor</option>
+                    <option>Associate Professor</option>
+                    <option>Head of the Department</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input type="text" id="email">
+            </div>
+
+        </div>
+
+        <!-- ROW 3 -->
+        <div class="form-row">
+
+            <div>
+                <label>Mobile</label>
+                <input type="text" id="mobile">
+            </div>
+
+            <div>
+                <label>Leave Type</label>
+                <select id="leaveType">
+                    <option>CL</option>
+                    <option>LWP</option>
+                    <option>ML</option>
+                    <option>EL</option>
+                    <option>DL</option>
+                    <option>SP</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- ROW 4 -->
+        <div class="form-row">
+
+            <div>
+                <label>From Date</label>
+                <input type="date" id="fromDate">
+            </div>
+
+            <div>
+                <label>To Date</label>
+                <input type="date" id="toDate">
+            </div>
+
+        </div>
+
+        <label>Reason</label>
+        <textarea id="reason"></textarea>
+
+        <label>Alternate Staff</label>
+        <select id="altStaff"></select>
+
+        <br>
+
+        <button type="button" class="primary-btn" onclick="submitLeave()">
+            🚀 Submit Leave
+        </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

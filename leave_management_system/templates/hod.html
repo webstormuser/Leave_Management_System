@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HOD Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        .status-approved { color: green; font-weight: bold; }
+        .status-rejected { color: red; font-weight: bold; }
+        .status-pending { color: orange; font-weight: bold; }
+
+        .section-title { margin-top: 20px; }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>📊 HOD Dashboard</h2>
+
+    <div class="nav-right">
+        <span>{{ user }}</span>
+        <a href="/logout">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+</div>
+
+<div class="main-container">
+<div class="dashboard">
+
+    <!-- INFO -->
+    <div class="glass-card info-box">
+        <h3>Welcome {{ user }}</h3>
+        <p>🏢 Department: {{ department }}</p>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-container">
+        <div class="kpi-card kpi-total"><h4>Total</h4><p>{{ total }}</p></div>
+        <div class="kpi-card kpi-approved"><h4>Approved</h4><p>{{ approved }}</p></div>
+        <div class="kpi-card kpi-rejected"><h4>Rejected</h4><p>{{ rejected }}</p></div>
+        <div class="kpi-card kpi-pending"><h4>Pending</h4><p>{{ pending }}</p></div>
+    </div>
+
+    <hr>
+
+    <!-- ================= APPROVAL SECTION ================= -->
+    <h2 class="section-title">🕒 Pending Requests</h2>
+
+    <div class="cards-container">
+    {% for leave in leaves %}
+        {% if leave.status == "Pending Approval" %}
+        <div class="glass-card pending-card"
+             data-from="{{ leave.from_date }}"
+             data-to="{{ leave.to_date }}">
+
+            <h3>{{ leave.id }}</h3>
+
+            <p><b>Name:</b> {{ leave.name }}</p>
+            <p><b>Dept:</b> {{ leave.department }}</p>
+            <p><b>Type:</b> {{ leave.leave_type }}</p>
+            <p><b>Date:</b> {{ leave.from_date }} → {{ leave.to_date }}</p>
+
+            <div class="btn-group">
+                <button onclick="approveLeave('{{ leave.id }}', this)">Approve</button>
+                <button onclick="rejectLeave('{{ leave.id }}', this)">Reject</button>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <hr>
+
+    <!-- ================= FILTER ================= -->
+    <h2 class="section-title">📅 Filter Records</h2>
+
+    <div class="glass-card">
+
+        <select id="monthSelect">
+            <option value="">Month</option>
+            <option value="01">Jan</option>
+            <option value="02">Feb</option>
+            <option value="03">Mar</option>
+            <option value="04">Apr</option>
+            <option value="05">May</option>
+            <option value="06">Jun</option>
+            <option value="07">Jul</option>
+            <option value="08">Aug</option>
+            <option value="09">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+        </select>
+
+        <select id="yearSelect">
+            <option value="">Year</option>
+            <option>2025</option>
+            <option>2026</option>
+            <option>2027</option>
+        </select>
+
+        <button onclick="filterByMonth()">Show Records</button>
+        <button onclick="resetFilter()">Reset</button>
+
+        <p id="filterResult"></p>
+
+    </div>
+
+    <!-- ================= ALL RECORDS ================= -->
+    <h2 class="section-title">📄 All Leave Records</h2>
+
+    <div class="cards-container">
+
+    {% for leave in leaves %}
+    <div class="glass-card record-card"
+         data-from="{{ leave.from_date }}"
+         data-to="{{ leave.to_date }}">
+
+        <h3>{{ leave.id }}</h3>
+
+        <p><b>Name:</b> {{ leave.name }}</p>
+        <p><b>Dept:</b> {{ leave.department }}</p>
+        <p><b>Type:</b> {{ leave.leave_type }}</p>
+        <p><b>Date:</b> {{ leave.from_date }} → {{ leave.to_date }}</p>
+
+        <p>
+            <b>Status:</b>
+            <span class="
+                {% if 'Approved' in leave.status %}status-approved
+                {% elif 'Rejected' in leave.status %}status-rejected
+                {% else %}status-pending{% endif %}
+            ">
+                {{ leave.status }}
+            </span>
+        </p>
+
+    </div>
+    {% endfor %}
+
+    </div>
+
+</div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Principal Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏛️ Principal Dashboard</h1>
+<p>Final Leave Approval System</p>
+
+<!-- ================= USER ================= -->
+<div class="info-box">
+    <h3>Welcome {{ user }}</h3>
+</div>
+
+<!-- ================= KPI ================= -->
+<div class="kpi-container">
+
+    <div class="kpi-card kpi-total">
+        <h4>Total</h4>
+        <p>{{ total }}</p>
+    </div>
+
+    <div class="kpi-card kpi-approved">
+        <h4>Final Approved</h4>
+        <p>{{ approved }}</p>
+    </div>
+
+    <div class="kpi-card kpi-rejected">
+        <h4>Final Rejected</h4>
+        <p>{{ rejected }}</p>
+    </div>
+
+    <div class="kpi-card kpi-pending">
+        <h4>Pending</h4>
+        <p>{{ pending }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>🕒 Pending Principal Approval</h2>
+
+{% if leaves|length == 0 %}
+    <p>No pending requests ✅</p>
+{% else %}
+
+    {% for leave in leaves %}
+
+    <div class="glass-card">
+
+        <h3>{{ leave.id }}</h3>
+        <p>👤 {{ leave.name }}</p>
+        <p>🏢 {{ leave.department }}</p>
+        <p>📄 {{ leave.leave_type }}</p>
+        <p>📅 {{ leave.from }} → {{ leave.to }}</p>
+        <p>📝 {{ leave.reason }}</p>
+
+        <div class="btn-group">
+
+            <button onclick="approvePrincipal('{{ leave.id }}')">
+                ✅ Approve
+            </button>
+
+            <button onclick="rejectPrincipal('{{ leave.id }}')">
+                ❌ Reject
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% endif %}
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
