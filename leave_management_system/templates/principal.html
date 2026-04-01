@@ -2,83 +2,167 @@
 <html>
 <head>
     <title>Principal Dashboard</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        .section-title { margin-top: 20px; }
+
+        .proof-box {
+            margin-top: 10px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .no-proof {
+            color: red;
+            font-weight: bold;
+        }
+
+        .proof-link {
+            color: #2e7d32;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .proof-link:hover {
+            text-decoration: underline;
+        }
+
+        .disabled-btn {
+            background: #ccc !important;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+    <h2>🏛️ Principal Dashboard</h2>
 
-<h1>🏛️ Principal Dashboard</h1>
-<p>Final Leave Approval System</p>
-
-<!-- ================= USER ================= -->
-<div class="info-box">
-    <h3>Welcome {{ user }}</h3>
+    <div class="nav-right">
+        <span>{{ user }}</span>
+        <a href="/logout">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
 </div>
 
-<!-- ================= KPI ================= -->
-<div class="kpi-container">
 
-    <div class="kpi-card kpi-total">
-        <h4>Total</h4>
-        <p>{{ total }}</p>
+<div class="main-container">
+<div class="dashboard">
+
+    <!-- ================= INFO ================= -->
+    <div class="glass-card info-box">
+        <h3>Welcome {{ user }}</h3>
     </div>
 
-    <div class="kpi-card kpi-approved">
-        <h4>Final Approved</h4>
-        <p>{{ approved }}</p>
-    </div>
+    <!-- ================= KPI ================= -->
+    <div class="kpi-container">
 
-    <div class="kpi-card kpi-rejected">
-        <h4>Final Rejected</h4>
-        <p>{{ rejected }}</p>
-    </div>
+        <div class="kpi-card kpi-total">
+            <h4>Total</h4>
+            <p>{{ total }}</p>
+        </div>
 
-    <div class="kpi-card kpi-pending">
-        <h4>Pending</h4>
-        <p>{{ pending }}</p>
-    </div>
+        <div class="kpi-card kpi-approved">
+            <h4>Final Approved</h4>
+            <p>{{ approved }}</p>
+        </div>
 
-</div>
+        <div class="kpi-card kpi-rejected">
+            <h4>Final Rejected</h4>
+            <p>{{ rejected }}</p>
+        </div>
 
-<hr>
-
-<h2>🕒 Pending Principal Approval</h2>
-
-{% if leaves|length == 0 %}
-    <p>No pending requests ✅</p>
-{% else %}
-
-    {% for leave in leaves %}
-
-    <div class="glass-card">
-
-        <h3>{{ leave.id }}</h3>
-        <p>👤 {{ leave.name }}</p>
-        <p>🏢 {{ leave.department }}</p>
-        <p>📄 {{ leave.leave_type }}</p>
-        <p>📅 {{ leave.from }} → {{ leave.to }}</p>
-        <p>📝 {{ leave.reason }}</p>
-
-        <div class="btn-group">
-
-            <button onclick="approvePrincipal('{{ leave.id }}')">
-                ✅ Approve
-            </button>
-
-            <button onclick="rejectPrincipal('{{ leave.id }}')">
-                ❌ Reject
-            </button>
-
+        <div class="kpi-card kpi-pending">
+            <h4>Pending</h4>
+            <p>{{ pending }}</p>
         </div>
 
     </div>
 
-    {% endfor %}
+    <hr>
 
-{% endif %}
+    <!-- ================= PENDING ================= -->
+    <h2 class="section-title">🕒 Pending Principal Approval</h2>
 
+    {% if leaves|length == 0 %}
+        <p>No pending requests ✅</p>
+    {% else %}
+
+        <div class="cards-container">
+
+        {% for leave in leaves %}
+
+        <div class="glass-card pending-card"
+             data-from="{{ leave.from_date or '' }}"
+             data-to="{{ leave.to_date or '' }}">
+
+            <h3>{{ leave.id }}</h3>
+
+            <p><b>Name:</b> {{ leave.name }}</p>
+            <p><b>Department:</b> {{ leave.department }}</p>
+            <p><b>Type:</b> {{ leave.leave_type }}</p>
+            <p><b>Date:</b> {{ leave.from_date }} → {{ leave.to_date }}</p>
+            <p><b>Reason:</b> {{ leave.reason }}</p>
+
+            <!-- ================= PROOF ================= -->
+            <div class="proof-box">
+                <b>Proof:</b><br>
+
+                {% if leave.proof %}
+                    <a class="proof-link" href="/uploads/{{ leave.proof }}" target="_blank">
+                        📄 View / Download Proof
+                    </a>
+
+                    <!-- OPTIONAL IMAGE PREVIEW -->
+                    {% if leave.proof.endswith('.jpg') or leave.proof.endswith('.png') %}
+                        <br><br>
+                        <img src="/uploads/{{ leave.proof }}" width="150" style="border-radius:8px;">
+                    {% endif %}
+
+                {% else %}
+                    <span class="no-proof">Not Uploaded ❌</span>
+                {% endif %}
+            </div>
+
+            <!-- ================= BUTTONS ================= -->
+            <div class="btn-group">
+
+                {% if leave.leave_type in ["ML","DL"] and not leave.proof %}
+                    <!-- ❌ Disable approve -->
+                    <button class="disabled-btn" disabled>
+                        ⚠️ Proof Required
+                    </button>
+                {% else %}
+                <button id="approveBtn-{{ leave.id }}"
+                onclick="approveLeave('{{ leave.id }}')"
+                {% if leave.leave_type in ["ML","DL"] %}disabled class="disabled-btn"{% endif %}>
+                    ✅Approve
+                </button>
+                  
+                {% endif %}
+
+                <button onclick="rejectLeave('{{ leave.id }}')">
+                    ❌ Reject
+                </button>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>
 </div>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>

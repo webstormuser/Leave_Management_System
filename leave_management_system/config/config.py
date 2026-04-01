@@ -25,7 +25,7 @@ HOD_DEPARTMENT = {
     "ansari.mujtahid@sscoetjalgaon.ac.in": "Electrical Engineering",
     "damle.prajitsen@sscoetjalgaon.ac.in": "Mechanical Engineering",
     "patil.sandip@sscoetjalgaon.ac.in": "First Year Engineering",
-    "principal@sscoetjalgaon.ac.in":"PRINCIPAL"
+    "principal@sscoetjalgaon.ac.in": "Principal"
 }
 
 # ✅ ADD THIS PART (IMPORTANT)

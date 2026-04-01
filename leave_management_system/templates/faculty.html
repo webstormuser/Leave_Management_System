@@ -4,7 +4,6 @@
     <title>Faculty Dashboard</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -32,12 +31,16 @@
 
             <div>
                 <label>Department</label>
-                <select id="department" onchange="updateFaculty()"></select>
+                <select id="department" onchange="updateFaculty()">
+                    <option value="">-- Select Department --</option>
+                </select>
             </div>
 
             <div>
                 <label>Name</label>
-                <select id="name" onchange="autoFillEmail()"></select>
+                <select id="name" onchange="autoFillEmail()">
+                    <option value="">-- Select Name --</option>
+                </select>
             </div>
 
         </div>
@@ -56,7 +59,8 @@
 
             <div>
                 <label>Email</label>
-                <input type="text" id="email">
+                <input type="email" id="email" placeholder="Enter your email">
+                
             </div>
 
         </div>
@@ -66,12 +70,13 @@
 
             <div>
                 <label>Mobile</label>
-                <input type="text" id="mobile">
+                <input type="tel" id="mobile" placeholder="Enter mobile number" maxlength="10">
+                <small style="color:gray;">You will receive leave status on email & mobile</small>
             </div>
 
             <div>
                 <label>Leave Type</label>
-                <select id="leaveType">
+                <select id="leaveType" onchange="toggleProof()">
                     <option>CL</option>
                     <option>LWP</option>
                     <option>ML</option>
@@ -83,17 +88,23 @@
 
         </div>
 
+        <!-- ✅ PROOF UPLOAD (DYNAMIC) -->
+        <div id="proofSection" style="display:none; margin-top:10px;">
+            <label>Upload Proof (Required for ML / DL)</label>
+            <input type="file" id="proof">
+        </div>
+
         <!-- ROW 4 -->
         <div class="form-row">
 
             <div>
                 <label>From Date</label>
-                <input type="date" id="fromDate">
+                <input type="date" id="fromDate" required>
             </div>
 
             <div>
                 <label>To Date</label>
-                <input type="date" id="toDate">
+                <input type="date" id="toDate" required>
             </div>
 
         </div>
@@ -102,7 +113,9 @@
         <textarea id="reason"></textarea>
 
         <label>Alternate Staff</label>
-        <select id="altStaff"></select>
+        <select id="altStaff">
+            <option value="">-- Select Alternate Staff --</option>
+        </select>
 
         <br>
 
@@ -117,6 +130,20 @@
 </div>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+// ✅ SHOW/HIDE PROOF FIELD
+function toggleProof() {
+    const leaveType = document.getElementById("leaveType").value;
+    const proofSection = document.getElementById("proofSection");
+
+    if (leaveType === "ML" || leaveType === "DL") {
+        proofSection.style.display = "block";
+    } else {
+        proofSection.style.display = "none";
+    }
+}
+</script>
 
 </body>
 </html>

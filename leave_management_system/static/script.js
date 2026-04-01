@@ -1,6 +1,5 @@
 // ================= DATA =================
 const staffByDepartment = {
-
     "Computer Engineering": [
         "Dr. Krishnakant P. Adhiya",
         "Dr. Manoj E. Patil (HOD)",
@@ -87,36 +86,29 @@ const staffByDepartment = {
 
 
 // ================= INIT =================
-window.onload = function () {
-
+document.addEventListener("DOMContentLoaded", function () {
     const deptSelect = document.getElementById("department");
 
-    if (deptSelect) {
-        deptSelect.innerHTML = `<option value="">-- Select Department --</option>`;
-
+    if (deptSelect && deptSelect.options.length <= 1) {
         Object.keys(staffByDepartment).forEach(dept => {
             deptSelect.add(new Option(dept, dept));
         });
     }
-};
+});
 
 
 // ================= UPDATE FACULTY =================
 function updateFaculty() {
-
     const dept = document.getElementById("department")?.value;
     const nameSelect = document.getElementById("name");
     const altStaff = document.getElementById("altStaff");
 
     if (!nameSelect || !altStaff) return;
 
-    nameSelect.innerHTML = "";
-    altStaff.innerHTML = "";
+    nameSelect.innerHTML = `<option value="">-- Select Name --</option>`;
+    altStaff.innerHTML = `<option value="">-- Select Alternate Staff --</option>`;
 
     if (!staffByDepartment[dept]) return;
-
-    nameSelect.add(new Option("-- Select Name --", ""));
-    altStaff.add(new Option("-- Select Alternate Staff --", ""));
 
     staffByDepartment[dept].forEach(name => {
         nameSelect.add(new Option(name, name));
@@ -127,7 +119,6 @@ function updateFaculty() {
 
 // ================= EMAIL AUTO =================
 function autoFillEmail() {
-
     let name = document.getElementById("name")?.value;
     let emailField = document.getElementById("email");
 
@@ -139,7 +130,9 @@ function autoFillEmail() {
                .toLowerCase()
                .replace(/\s+/g, ".");
 
-    emailField.value = name + "@sscoetjalgaon.ac.in";
+    if (!emailField.value) {
+                emailField.value = name + "@sscoetjalgaon.ac.in";
+            }emailField.value = name + "@sscoetjalgaon.ac.in";
 }
 
 
@@ -149,6 +142,7 @@ function submitLeave() {
     const department = document.getElementById("department")?.value;
     const name = document.getElementById("name")?.value;
     const altStaff = document.getElementById("altStaff")?.value;
+    const leaveType = document.getElementById("leaveType")?.value;
 
     if (!department || !name) {
         alert("Please select Department and Name ❌");
@@ -160,81 +154,95 @@ function submitLeave() {
         return;
     }
 
-    const data = {
-        department,
-        name,
-        designation: document.getElementById("designation")?.value,
-        email: document.getElementById("email")?.value,
-        mobile: document.getElementById("mobile")?.value,
-        fromDate: document.getElementById("fromDate")?.value,
-        toDate: document.getElementById("toDate")?.value,
-        leaveType: document.getElementById("leaveType")?.value,
-        reason: document.getElementById("reason")?.value,
-        altStaff
-    };
+    const fromDate = document.getElementById("fromDate")?.value;
+    const toDate = document.getElementById("toDate")?.value;
+
+    if (!fromDate || !toDate) {
+        alert("Please select dates ❌");
+        return;
+    }
+
+    // ✅ PROOF VALIDATION
+    const proofFile = document.getElementById("proof")?.files[0];
+
+    if ((leaveType === "ML" || leaveType === "DL") && !proofFile) {
+        alert("Proof is required for ML / DL ❌");
+        return;
+    }
+
+    // ✅ USE FORMDATA (IMPORTANT)
+    const formData = new FormData();
+
+    formData.append("department", department);
+    formData.append("name", name);
+    formData.append("designation", document.getElementById("designation")?.value);
+    formData.append("email", document.getElementById("email")?.value);
+    formData.append("mobile", document.getElementById("mobile")?.value);
+    formData.append("fromDate", fromDate);
+    formData.append("toDate", toDate);
+    formData.append("leaveType", leaveType);
+    formData.append("reason", document.getElementById("reason")?.value);
+    formData.append("altStaff", altStaff);
+
+    if (proofFile) {
+        formData.append("proof", proofFile);
+    }
 
     fetch("/submit", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        credentials: "same-origin",
+        body: formData
     })
     .then(res => res.json())
     .then(res => {
         alert("Submitted ID: " + res.request_id);
         location.reload();
+    })
+    .catch(err => {
+        alert("Submission failed ❌");
+        console.error(err);
     });
 }
 
 
-// ================= MONTH FILTER (FIXED) =================
+// ================= FILTER =================
 function filterByMonth() {
-
     const month = document.getElementById("monthSelect")?.value;
     const year = document.getElementById("yearSelect")?.value;
 
-    if (!month || !year) {
-        alert("Select month and year");
-        return;
-    }
-
+    const cards = document.querySelectorAll(".record-card");
     let count = 0;
-    const selected = year + "-" + month;
 
-    // ✅ ONLY FILTER RECORDS
-    document.querySelectorAll(".record-card").forEach(card => {
+    cards.forEach(card => {
+        const fromDate = card.getAttribute("data-from");
 
-        let fromDate = card.getAttribute("data-from");
-        let toDate = card.getAttribute("data-to");
-
-        if (!fromDate || !toDate) {
-            card.style.display = "block";
-            count++;
+        if (!fromDate) {
+            card.style.display = "none";
             return;
         }
 
-        let f = fromDate.split("-");
-        let t = toDate.split("-");
+        const [cardYear, cardMonth] = fromDate.split("-");
 
-        let fromVal = f[0] + "-" + f[1].padStart(2, "0");
-        let toVal = t[0] + "-" + t[1].padStart(2, "0");
-
-        if (selected >= fromVal && selected <= toVal) {
+        if (
+            (month === "" || cardMonth === month) &&
+            (year === "" || cardYear === year)
+        ) {
             card.style.display = "block";
             count++;
         } else {
             card.style.display = "none";
         }
-
     });
 
     document.getElementById("filterResult").innerText =
-        "Showing " + count + " record(s)";
+        count === 0
+        ? "No records found ❌"
+        : count + " record(s) found ✅";
 }
 
 
 // ================= RESET =================
 function resetFilter() {
-
     document.getElementById("monthSelect").value = "";
     document.getElementById("yearSelect").value = "";
 
@@ -247,10 +255,14 @@ function resetFilter() {
 
 
 // ================= APPROVE =================
-function approveLeave(id, btn) {
+function approveLeave(id) {
+    let url = window.location.pathname.includes("principal")
+        ? "/principal/approve"
+        : "/hod/approve";
 
-    fetch("/hod/approve", {
+    fetch(url, {
         method: "POST",
+        credentials: "same-origin",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ id })
     })
@@ -263,10 +275,14 @@ function approveLeave(id, btn) {
 
 
 // ================= REJECT =================
-function rejectLeave(id, btn) {
+function rejectLeave(id) {
+    let url = window.location.pathname.includes("principal")
+        ? "/principal/reject"
+        : "/hod/reject";
 
-    fetch("/hod/reject", {
+    fetch(url, {
         method: "POST",
+        credentials: "same-origin",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ id })
     })

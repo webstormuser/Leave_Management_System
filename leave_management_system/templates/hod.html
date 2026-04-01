@@ -10,7 +10,6 @@
         .status-approved { color: green; font-weight: bold; }
         .status-rejected { color: red; font-weight: bold; }
         .status-pending { color: orange; font-weight: bold; }
-
         .section-title { margin-top: 20px; }
     </style>
 </head>
@@ -47,15 +46,15 @@
 
     <hr>
 
-    <!-- ================= APPROVAL SECTION ================= -->
+    <!-- ================= PENDING ================= -->
     <h2 class="section-title">🕒 Pending Requests</h2>
 
     <div class="cards-container">
-    {% for leave in leaves %}
+    {% for leave in all_leaves %}
         {% if leave.status == "Pending Approval" %}
         <div class="glass-card pending-card"
-             data-from="{{ leave.from_date }}"
-             data-to="{{ leave.to_date }}">
+             data-from="{{ leave.from_date or '' }}"
+             data-to="{{ leave.to_date or '' }}">
 
             <h3>{{ leave.id }}</h3>
 
@@ -115,10 +114,10 @@
 
     <div class="cards-container">
 
-    {% for leave in leaves %}
+    {% for leave in all_leaves %}
     <div class="glass-card record-card"
-         data-from="{{ leave.from_date }}"
-         data-to="{{ leave.to_date }}">
+         data-from="{{ leave.from_date or '' }}"
+         data-to="{{ leave.to_date or '' }}">
 
         <h3>{{ leave.id }}</h3>
 

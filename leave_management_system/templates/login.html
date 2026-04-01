@@ -2,44 +2,54 @@
 <html>
 <head>
     <title>Login - Leave System</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>📋 Leave Management System</h1>
+    <h1>📋 Leave Management System</h1>
 
-<form action="/login" method="POST">
+    <form action="/login" method="POST">
 
-    <!-- ROLE -->
-    <label>Select Role</label>
-    <select name="role" required>
-        <option value="">-- Select Role --</option>
-        <option value="Faculty">Faculty</option>
-        <option value="HOD">HOD</option>
-        <option value="Principal">Principal</option>
-    </select>
+        <!-- ROLE -->
+        <label>Select Role</label>
+        <select name="role" required>
+            <option value="">-- Select Role --</option>
+            <option value="Faculty">Faculty</option>
+            <option value="HOD">HOD</option>
+            <option value="Principal">Principal</option>
+        </select>
 
-    <!-- USERNAME -->
-    <label>Email / Username</label>
-    <input type="text" name="username" required>
+        <!-- USERNAME -->
+        <label>Email (HOD / Principal) or Username (Faculty)</label>
+        <input type="text" name="username" placeholder="Enter email or username" required>
 
-    <!-- PASSWORD -->
-    <label>Password</label>
-    <input type="password" name="password" required>
+        <!-- PASSWORD -->
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter password" required>
 
-    <br><br>
+        <br><br>
 
-    <button type="submit">🔐 Login</button>
+        <button type="submit" class="primary-btn">🔐 Login</button>
 
-</form>
+    </form>
 
-<!-- ERROR MESSAGE -->
-{% if error %}
-    <p style="color:red;">{{ error }}</p>
-{% endif %}
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+        <p style="color:red; margin-top:10px;">{{ error }}</p>
+    {% endif %}
+
+    <!-- HELP TEXT -->
+    <div style="margin-top:20px; font-size:14px; color:#555;">
+        <p><b>Login Help:</b></p>
+        <p>👨‍🏫 Faculty → username: <b>faculty</b></p>
+        <p>🏢 HOD → use your college email</p>
+        <p>🏛️ Principal → use: <b>principal@sscoetjalgaon.ac.in</b></p>
+    </div>
 
 </div>
 

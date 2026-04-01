@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, request, redirect, jsonify
 from database.db import init_db, get_connection
 from database.leave_db import get_leaves, get_leave_by_id
 from services.approval_service import handle_approval
-from config.config import HOD_CREDENTIALS, HOD_DEPARTMENT
+from config.config import HOD_CREDENTIALS, HOD_DEPARTMENT, PRINCIPAL
 
 from datetime import datetime
 import uuid
@@ -30,11 +30,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+        # ===== FACULTY =====
         if role == "Faculty" and username == "faculty" and password == "123":
             session["role"] = "Faculty"
             session["user"] = username
             return redirect("/faculty")
 
+        # ===== HOD =====
         elif role == "HOD":
             if username in HOD_CREDENTIALS and password == HOD_CREDENTIALS[username]:
                 session["role"] = "HOD"
@@ -43,13 +45,14 @@ def login():
             else:
                 return render_template("login.html", error="Invalid HOD credentials ❌")
 
-        elif role == "Principal" and username == "principal" and password == "123":
-            session["role"] = "Principal"
-            session["user"] = username
-            return redirect("/principal")
-
-        else:
-            return render_template("login.html", error="Invalid Credentials ❌")
+        # ===== PRINCIPAL =====
+        elif role == "Principal":
+            if username == PRINCIPAL and password == HOD_CREDENTIALS.get(username):
+                session["role"] = "Principal"
+                session["user"] = username
+                return redirect("/principal")
+            else:
+                return render_template("login.html", error="Invalid Principal credentials ❌")
 
     return render_template("login.html")
 
@@ -81,7 +84,6 @@ def submit_leave():
     try:
         data = request.get_json()
 
-        # ✅ DATE HANDLING
         from_date = datetime.strptime(data['fromDate'], "%Y-%m-%d")
         to_date = datetime.strptime(data['toDate'], "%Y-%m-%d")
 
@@ -89,7 +91,6 @@ def submit_leave():
             return jsonify({"status": "error", "message": "Invalid date range"})
 
         days = (to_date - from_date).days + 1
-
         leave_id = str(uuid.uuid4())[:8]
 
         conn = get_connection()
@@ -110,8 +111,8 @@ def submit_leave():
             data.get("email"),
             data.get("mobile"),
             data.get("leaveType"),
-            data.get("fromDate")[:10],   # ✅ FIX FORMAT
-            data.get("toDate")[:10],     # ✅ FIX FORMAT
+            data.get("fromDate")[:10],
+            data.get("toDate")[:10],
             days,
             data.get("reason"),
             data.get("altStaff"),
@@ -143,33 +144,34 @@ def hod():
 
     data = get_leaves()
 
-    leaves = []
+    pending_leaves = []
+    all_leaves = []
+
     total = approved = rejected = pending = 0
 
     for row in data:
 
         leave = {
-            "id": row[0],
-            "name": row[1],
-            "department": row[2],
-            "leave_type": row[3],
-
-            # ✅ FIXED (IMPORTANT)
-            "from_date": row[4],
-            "to_date": row[5],
-
-            "reason": row[6],
-            "status": row[7],
-            "email": row[8]
+        "id": row["id"],
+        "name": row["name"],
+        "department": row["department"],
+        "leave_type": row["leave_type"],
+        "from_date": row["from_date"],
+        "to_date": row["to_date"],
+        "reason": row["reason"],
+        "status": row["status"],
+        "email": row["email"]
         }
 
-        if leave["department"] == dept:
+        # ✅ Flexible match (fixes 0 records issue)
+        if dept and leave["department"] and dept.lower() in leave["department"].lower():
 
             total += 1
+            all_leaves.append(leave)
 
             if leave["status"] == "Pending Approval":
                 pending += 1
-                leaves.append(leave)
+                pending_leaves.append(leave)
 
             elif "Approved" in leave["status"]:
                 approved += 1
@@ -181,7 +183,8 @@ def hod():
         "hod.html",
         user=user,
         department=dept,
-        leaves=leaves,
+        leaves=pending_leaves,
+        all_leaves=all_leaves,
         total=total,
         approved=approved,
         rejected=rejected,
@@ -204,18 +207,15 @@ def principal():
     for row in data:
 
         leave = {
-            "id": row[0],
-            "name": row[1],
-            "department": row[2],
-            "leave_type": row[3],
-
-            # ✅ FIXED
-            "from_date": row[4],
-            "to_date": row[5],
-
-            "reason": row[6],
-            "status": row[7],
-            "email": row[8]
+            "id": row["id"],
+            "name": row["name"],
+            "department": row["department"],
+            "leave_type": row["leave_type"],
+            "from_date": row["from_date"],
+            "to_date": row["to_date"],
+            "reason": row["reason"],
+            "status": row["status"],
+            "email": row["email"]
         }
 
         total += 1
@@ -241,7 +241,7 @@ def principal():
     )
 
 
-# ================= APPROVAL =================
+# ================= HOD APPROVAL =================
 @app.route("/hod/approve", methods=["POST"])
 def hod_approve():
 
@@ -254,7 +254,10 @@ def hod_approve():
     if not leave:
         return jsonify({"message": "Leave not found ❌"})
 
-    leave = dict(leave)  # ✅ IMPORTANT
+    leave = dict(leave)
+
+    leave["from_date"] = leave.get("from_date") or leave.get("from")
+    leave["to_date"] = leave.get("to_date") or leave.get("to")
 
     msg = handle_approval("HOD_APPROVE", leave)
     return jsonify({"message": msg})
@@ -274,17 +277,33 @@ def hod_reject():
 
     leave = dict(leave)
 
+    leave["from_date"] = leave.get("from_date") or leave.get("from")
+    leave["to_date"] = leave.get("to_date") or leave.get("to")
+
     msg = handle_approval("HOD_REJECT", leave)
     return jsonify({"message": msg})
 
 
+# ================= PRINCIPAL APPROVAL =================
 @app.route("/principal/approve", methods=["POST"])
 def principal_approve():
+
+    if session.get("role") != "Principal":
+        return jsonify({"message": "Unauthorized"}), 403
 
     leave_id = request.json.get("id")
     leave = get_leave_by_id(leave_id)
 
+    if not leave:
+        return jsonify({"message": "Leave not found ❌"})
+    
+    if leave["leave_type"] in ["ML","DL"] and not leave.get("proof"):
+        return jsonify({"message": "Proof required ❌"}), 400
+
     leave = dict(leave)
+
+    leave["from_date"] = leave.get("from_date") or leave.get("from")
+    leave["to_date"] = leave.get("to_date") or leave.get("to")
 
     msg = handle_approval("PRINCIPAL_APPROVE", leave)
     return jsonify({"message": msg})
@@ -293,10 +312,19 @@ def principal_approve():
 @app.route("/principal/reject", methods=["POST"])
 def principal_reject():
 
+    if session.get("role") != "Principal":
+        return jsonify({"message": "Unauthorized"}), 403
+
     leave_id = request.json.get("id")
     leave = get_leave_by_id(leave_id)
 
+    if not leave:
+        return jsonify({"message": "Leave not found ❌"})
+
     leave = dict(leave)
+
+    leave["from_date"] = leave.get("from_date") or leave.get("from")
+    leave["to_date"] = leave.get("to_date") or leave.get("to")
 
     msg = handle_approval("PRINCIPAL_REJECT", leave)
     return jsonify({"message": msg})
