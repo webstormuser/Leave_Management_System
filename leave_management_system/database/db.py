@@ -6,7 +6,7 @@ DB_NAME = "leave_system.db"
 # ================= CONNECTION =================
 def get_connection():
     conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row   # ✅ IMPORTANT (returns dict-like rows)
+    conn.row_factory = sqlite3.Row
     return conn
 
 
@@ -32,9 +32,9 @@ def create_leave_table():
 
     # ================= SAFE COLUMN ADD =================
     c.execute("PRAGMA table_info(leaves)")
-    columns = [col["name"] for col in c.fetchall()]  # ✅ FIXED (Row object)
+    columns = [col["name"] for col in c.fetchall()]
 
-    # Add missing columns safely
+    # Existing columns
     if "days" not in columns:
         c.execute("ALTER TABLE leaves ADD COLUMN days INTEGER")
 
@@ -46,6 +46,10 @@ def create_leave_table():
 
     if "alt_staff" not in columns:
         c.execute("ALTER TABLE leaves ADD COLUMN alt_staff TEXT")
+
+    # ✅ NEW COLUMN FOR PROOF
+    if "proof" not in columns:
+        c.execute("ALTER TABLE leaves ADD COLUMN proof TEXT")
 
     conn.commit()
     conn.close()
@@ -61,7 +65,7 @@ def get_all_leaves():
 
     conn.close()
 
-    return [dict(row) for row in rows]   # ✅ always dictionary
+    return [dict(row) for row in rows]
 
 
 # ================= GET LEAVE BY ID =================
@@ -74,7 +78,7 @@ def get_leave_by_id(leave_id):
 
     conn.close()
 
-    return dict(row) if row else None   # ✅ FIXES YOUR ERROR
+    return dict(row) if row else None
 
 
 # ================= UPDATE STATUS =================

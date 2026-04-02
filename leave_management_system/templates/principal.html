@@ -114,18 +114,14 @@
             <!-- ================= PROOF ================= -->
             <div class="proof-box">
                 <b>Proof:</b><br>
-
+            
                 {% if leave.proof %}
-                    <a class="proof-link" href="/uploads/{{ leave.proof }}" target="_blank">
-                        📄 View / Download Proof
+                    <a class="proof-link"
+                       href="/uploads/{{ leave.proof }}"
+                       target="_blank"
+                       onclick="markProofViewed('{{ leave.id }}')">
+                        📄 View Proof
                     </a>
-
-                    <!-- OPTIONAL IMAGE PREVIEW -->
-                    {% if leave.proof.endswith('.jpg') or leave.proof.endswith('.png') %}
-                        <br><br>
-                        <img src="/uploads/{{ leave.proof }}" width="150" style="border-radius:8px;">
-                    {% endif %}
-
                 {% else %}
                     <span class="no-proof">Not Uploaded ❌</span>
                 {% endif %}
@@ -141,9 +137,10 @@
                     </button>
                 {% else %}
                 <button id="approveBtn-{{ leave.id }}"
-                onclick="approveLeave('{{ leave.id }}')"
-                {% if leave.leave_type in ["ML","DL"] %}disabled class="disabled-btn"{% endif %}>
-                    ✅Approve
+                    onclick="approveLeave('{{ leave.id }}')"
+                    class="disabled-btn"
+                    disabled>
+                ✅ Approve
                 </button>
                   
                 {% endif %}

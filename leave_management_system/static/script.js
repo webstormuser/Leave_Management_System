@@ -292,3 +292,23 @@ function rejectLeave(id) {
         location.reload();
     });
 }
+//==============================
+function markProofViewed(leaveId) {
+
+    fetch("/principal/mark_viewed", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: leaveId })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.status === "ok") {
+            let btn = document.getElementById("approveBtn-" + leaveId);
+            btn.disabled = false;
+            btn.classList.remove("disabled-btn");
+        }
+    });
+}

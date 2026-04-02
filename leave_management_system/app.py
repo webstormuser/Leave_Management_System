@@ -288,26 +288,60 @@ def hod_reject():
 @app.route("/principal/approve", methods=["POST"])
 def principal_approve():
 
+    # ================= AUTH =================
     if session.get("role") != "Principal":
         return jsonify({"message": "Unauthorized"}), 403
 
     leave_id = request.json.get("id")
     leave = get_leave_by_id(leave_id)
 
+    # ================= VALIDATION =================
     if not leave:
-        return jsonify({"message": "Leave not found ❌"})
-    
-    if leave["leave_type"] in ["ML","DL"] and not leave.get("proof"):
-        return jsonify({"message": "Proof required ❌"}), 400
+        return jsonify({"message": "Leave not found ❌"}), 404
 
+    # ✅ Convert to dict FIRST (IMPORTANT)
     leave = dict(leave)
 
+    leave_type = leave.get("leave_type")
+    proof = leave.get("proof")
+    proof_viewed = leave.get("proof_viewed")
+
+    # ================= ML / DL RULE =================
+    if leave_type in ["ML", "DL"]:
+
+        # ❌ No proof uploaded
+        if not proof:
+            return jsonify({"message": "Proof required ❌"}), 400
+
+        # ❌ Proof not viewed
+        if not proof_viewed:
+            return jsonify({"message": "Please view proof before approval ❌"}), 400
+
+    # ================= DATE FIX =================
     leave["from_date"] = leave.get("from_date") or leave.get("from")
     leave["to_date"] = leave.get("to_date") or leave.get("to")
 
+    # ================= FINAL APPROVAL =================
     msg = handle_approval("PRINCIPAL_APPROVE", leave)
+
     return jsonify({"message": msg})
 
+@app.route("/principal/mark_viewed", methods=["POST"])
+def mark_viewed():
+
+    if session.get("role") != "Principal":
+        return jsonify({"status": "unauthorized"}), 403
+
+    leave_id = request.json.get("id")
+
+    conn = get_connection()
+    c = conn.cursor()
+
+    c.execute("UPDATE leaves SET proof_viewed = 1 WHERE id = ?", (leave_id,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({"status": "ok"})
 
 @app.route("/principal/reject", methods=["POST"])
 def principal_reject():
