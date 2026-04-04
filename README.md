@@ -1,6 +1,6 @@
 # 📋 Leave Management System
 
-A **Streamlit-based Leave Management System** designed for academic institutions to manage faculty leave applications efficiently through a structured approval workflow.
+A **Flask APP -based Leave Management System** designed for academic institutions to manage faculty leave applications efficiently through a structured approval workflow.
 
 ---
 
