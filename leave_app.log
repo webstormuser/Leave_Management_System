@@ -304,3 +304,74 @@
 2026-04-04 13:47:19,878 - INFO - Leave Data: {'id': '45061db9', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': '', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Pooja Khandar', 'proof': 'static/uploads/b45e76bc-1abe-4cef-90fa-f6127688e4e5_New_Text_Document.txt', 'proof_viewed': 1}
 2026-04-04 13:47:22,264 - INFO - Fetched all leave records
 2026-04-04 13:47:22,311 - INFO - Fetched all leave records
+2026-04-04 14:27:58,318 - INFO - Fetched all leave records
+2026-04-04 14:28:15,194 - INFO - Fetched all leave records
+2026-04-04 14:28:32,331 - INFO - Fetched all leave records
+2026-04-04 14:28:34,051 - INFO - Fetched leave | ReqID: 24cc82aa
+2026-04-04 14:28:34,052 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 24cc82aa
+2026-04-04 14:28:34,052 - INFO - Leave Data: {'id': '24cc82aa', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-27', 'to_date': '2026-04-28', 'reason': 'University Practical Exam duty', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads/Ashwini_A_Kakde_DL_20260404_142730.txt', 'proof_viewed': 1}
+2026-04-04 14:28:36,656 - INFO - Fetched all leave records
+2026-04-04 14:35:45,978 - INFO - Fetched all leave records
+2026-04-04 14:36:00,345 - INFO - Fetched all leave records
+2026-04-04 14:36:15,774 - INFO - Fetched all leave records
+2026-04-04 14:36:18,086 - INFO - Fetched all leave records
+2026-04-04 14:36:19,691 - INFO - Fetched leave | ReqID: df8311d0
+2026-04-04 14:36:19,691 - INFO - Processing PRINCIPAL_APPROVE | ReqID: df8311d0
+2026-04-04 14:36:19,691 - INFO - Leave Data: {'id': 'df8311d0', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-29', 'to_date': '2026-04-30', 'reason': '', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads/Ashwini_A_Kakde_DL_20260404_143524.txt', 'proof_viewed': 1}
+2026-04-04 14:36:21,057 - INFO - Fetched all leave records
+2026-04-04 14:38:23,558 - INFO - Fetched all leave records
+2026-04-04 14:38:23,881 - INFO - Fetched all leave records
+2026-04-04 14:41:31,655 - INFO - Fetched all leave records
+2026-04-04 14:41:32,146 - INFO - Fetched all leave records
+2026-04-04 14:41:41,304 - INFO - Fetched all leave records
+2026-04-04 14:43:39,559 - INFO - Fetched all leave records
+2026-04-04 14:43:40,310 - INFO - Fetched all leave records
+2026-04-04 14:43:40,518 - INFO - Fetched all leave records
+2026-04-04 14:43:40,723 - INFO - Fetched all leave records
+2026-04-04 14:43:40,931 - INFO - Fetched all leave records
+2026-04-04 14:43:41,118 - INFO - Fetched all leave records
+2026-04-04 14:43:41,309 - INFO - Fetched all leave records
+2026-04-04 14:43:41,505 - INFO - Fetched all leave records
+2026-04-04 14:51:24,991 - INFO - Fetched all leave records
+2026-04-04 14:51:25,532 - INFO - Fetched all leave records
+2026-04-04 14:51:35,014 - INFO - Fetched all leave records
+2026-04-04 14:51:36,573 - INFO - Fetched all leave records
+2026-04-04 14:51:37,293 - INFO - Fetched all leave records
+2026-04-04 14:52:18,856 - INFO - Fetched all leave records
+2026-04-04 14:52:19,743 - INFO - Fetched all leave records
+2026-04-04 14:52:19,948 - INFO - Fetched all leave records
+2026-04-04 14:52:20,147 - INFO - Fetched all leave records
+2026-04-04 14:52:20,356 - INFO - Fetched all leave records
+2026-04-04 14:52:24,454 - INFO - Fetched all leave records
+2026-04-04 14:52:24,661 - INFO - Fetched all leave records
+2026-04-04 14:52:24,862 - INFO - Fetched all leave records
+2026-04-04 14:52:25,051 - INFO - Fetched all leave records
+2026-04-04 14:52:25,243 - INFO - Fetched all leave records
+2026-04-04 14:58:44,103 - INFO - Fetched all leave records
+2026-04-04 14:58:44,839 - INFO - Fetched all leave records
+2026-04-04 14:58:45,044 - INFO - Fetched all leave records
+2026-04-04 14:58:45,259 - INFO - Fetched all leave records
+2026-04-04 14:58:45,476 - INFO - Fetched all leave records
+2026-04-04 14:59:49,343 - INFO - Fetched all leave records
+2026-04-04 14:59:50,078 - INFO - Fetched all leave records
+2026-04-04 14:59:50,291 - INFO - Fetched all leave records
+2026-04-04 14:59:50,513 - INFO - Fetched all leave records
+2026-04-04 15:00:32,912 - INFO - Fetched all leave records
+2026-04-04 15:00:33,567 - INFO - Fetched all leave records
+2026-04-04 15:00:33,766 - INFO - Fetched all leave records
+2026-04-04 15:01:15,195 - INFO - Fetched all leave records
+2026-04-04 15:01:15,805 - INFO - Fetched all leave records
+2026-04-04 15:01:16,029 - INFO - Fetched all leave records
+2026-04-04 15:01:16,365 - INFO - Fetched all leave records
+2026-04-04 15:01:16,564 - INFO - Fetched all leave records
+2026-04-04 15:01:45,055 - INFO - Fetched all leave records
+2026-04-04 15:01:46,999 - INFO - Fetched all leave records
+2026-04-04 15:01:47,287 - INFO - Fetched all leave records
+2026-04-04 15:01:59,294 - INFO - Fetched all leave records
+2026-04-04 15:01:59,797 - INFO - Fetched all leave records
+2026-04-04 15:02:00,052 - INFO - Fetched all leave records
+2026-04-04 15:02:00,243 - INFO - Fetched all leave records
+2026-04-04 15:02:00,565 - INFO - Fetched all leave records
+2026-04-04 15:02:18,104 - INFO - Fetched all leave records
+2026-04-04 15:02:18,823 - INFO - Fetched all leave records
+2026-04-04 15:02:19,038 - INFO - Fetched all leave records

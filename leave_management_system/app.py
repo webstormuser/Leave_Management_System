@@ -6,9 +6,11 @@ from config.config import HOD_CREDENTIALS, HOD_DEPARTMENT, PRINCIPAL
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
-
-from datetime import datetime
 import uuid
+
+import os
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -17,7 +19,7 @@ app.secret_key = "secret123"
 init_db()
 
 # ================= CONFIG =================
-UPLOAD_FOLDER = "static/uploads"
+UPLOAD_FOLDER = "uploads"
 
 
 # ================= HOME =================
@@ -98,39 +100,38 @@ def submit_leave():
         leave_id = str(uuid.uuid4())[:8]
 
         # ================= FILE HANDLING =================
-        # ================= FILE HANDLING =================
-    proof_path = None
+        proof_path = None
 
-    if file and file.filename != "":
-        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        if file and file.filename != "":
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-        # 🔹 Original filename
-        original_name = secure_filename(file.filename)
+            original_name = secure_filename(file.filename)
+            name, ext = os.path.splitext(original_name)
 
-        # 🔹 Split extension
-        name, ext = os.path.splitext(original_name)
+            # ✅ FIX: ensure extension exists
+            if not ext:
+                ext = ".txt"
 
-        # 🔹 Clean faculty name
-        faculty_name = data.get("name", "faculty")
-        faculty_name = faculty_name.replace("(HOD)", "")
-        faculty_name = faculty_name.replace("Dr.", "").replace("Mr.", "").replace("Ms.", "").replace("Mrs.", "")
-        faculty_name = faculty_name.strip().replace(" ", "_").replace(".", "")
+            # 🔹 Clean faculty name
+            faculty_name = data.get("name", "faculty")
+            faculty_name = faculty_name.replace("(HOD)", "")
+            faculty_name = faculty_name.replace("Dr.", "").replace("Mr.", "").replace("Ms.", "").replace("Mrs.", "")
+            faculty_name = faculty_name.strip().replace(" ", "_").replace(".", "")
 
-        # 🔹 Leave type
-        leave_type = data.get("leaveType", "Leave")
+            # 🔹 Leave type
+            leave_type = data.get("leaveType", "Leave")
 
-        # 🔹 Timestamp
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            # 🔹 Timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-        # 🔹 FINAL NAME (ONLY THIS NAME USED)
-        final_name = f"{faculty_name}_{leave_type}_{timestamp}{ext}"
+            # 🔹 Final filename
+            final_name = f"{faculty_name}_{leave_type}_{timestamp}{ext}"
 
-        # 🔹 Save file
-        file_path = os.path.join(UPLOAD_FOLDER, final_name)
-        file.save(file_path)
+            file_path = os.path.join(UPLOAD_FOLDER, final_name)
+            file.save(file_path)
 
-        # 🔹 Store RELATIVE path (IMPORTANT)
-        proof_path = f"static/uploads/{final_name}"
+            # ✅ ALWAYS STORE RELATIVE PATH
+            proof_path = f"static/uploads/{final_name}"
 
         # ================= DB INSERT =================
         conn = get_connection()
@@ -261,7 +262,7 @@ def principal():
     )
 
 
-# ================= PRINCIPAL APPROVAL =================
+# ================= PRINCIPAL APPROVE =================
 @app.route("/principal/approve", methods=["POST"])
 def principal_approve():
 
@@ -279,7 +280,6 @@ def principal_approve():
     leave_type = leave.get("leave_type")
     proof = leave.get("proof")
 
-    # ✅ FIX BOOLEAN ISSUE
     proof_viewed = int(leave.get("proof_viewed") or 0)
 
     if leave_type in ["ML", "DL"]:
