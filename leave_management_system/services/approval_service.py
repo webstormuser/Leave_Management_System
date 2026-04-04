@@ -21,19 +21,8 @@ def handle_approval(action, leave):
         # ================= HOD APPROVE =================
         if action == "HOD_APPROVE":
 
-            if leave_type == "CL":
-
-                update_status(request_id, "Approved by HOD")
-
-                send_applicant_email(
-                    leave.get("email"),
-                    leave.get("name"),
-                    "Approved by HOD"
-                )
-
-                return "Leave Approved by HOD"
-
-            elif leave_type in ["ML", "DL"]:
+            # ✅ ML / DL → SEND TO PRINCIPAL
+            if leave_type in ["ML", "DL"]:
 
                 update_status(request_id, "Pending Principal Approval")
 
@@ -41,6 +30,7 @@ def handle_approval(action, leave):
 
                 return "Approved by HOD → Sent to Principal"
 
+            # ✅ OTHER LEAVES → FINAL AT HOD
             else:
 
                 update_status(request_id, "Approved by HOD")

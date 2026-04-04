@@ -99,9 +99,7 @@
 
         {% for leave in leaves %}
 
-        <div class="glass-card pending-card"
-             data-from="{{ leave.from_date or '' }}"
-             data-to="{{ leave.to_date or '' }}">
+        <div class="glass-card pending-card">
 
             <h3>{{ leave.id }}</h3>
 
@@ -114,12 +112,20 @@
             <!-- ================= PROOF ================= -->
             <div class="proof-box">
                 <b>Proof:</b><br>
-            
+
                 {% if leave.proof %}
+
+                    <!-- ✅ FINAL FIXED LINK -->
+                    <!--<a class="proof-link"
+                        href="{{ url_for('static', filename=leave.proof.split('static/')[-1]) }}"
+                        target="_blank"
+                        onclick="markProofViewed('{{ leave.id }}')">
+                        📄 View Proof
+                    </a> --> 
                     <a class="proof-link"
-                       href="/uploads/{{ leave.proof }}"
-                       target="_blank"
-                       onclick="markProofViewed('{{ leave.id }}')">
+                        href="/static/uploads/{{ leave.proof.split('/')[-1] }}"
+                        target="_blank"
+                        onclick="markProofViewed('{{ leave.id }}')">
                         📄 View Proof
                     </a>
                 {% else %}
@@ -130,19 +136,26 @@
             <!-- ================= BUTTONS ================= -->
             <div class="btn-group">
 
+                <!-- ❌ ML/DL without proof -->
                 {% if leave.leave_type in ["ML","DL"] and not leave.proof %}
-                    <!-- ❌ Disable approve -->
                     <button class="disabled-btn" disabled>
                         ⚠️ Proof Required
                     </button>
+
+                <!-- 🔒 ML/DL proof exists but not viewed -->
+                {% elif leave.leave_type in ["ML","DL"] and not leave.proof_viewed %}
+                    <button id="approveBtn-{{ leave.id }}"
+                            class="disabled-btn"
+                            disabled>
+                        👁️ View Proof First
+                    </button>
+
+                <!-- ✅ ENABLE APPROVE -->
                 {% else %}
-                <button id="approveBtn-{{ leave.id }}"
-                    onclick="approveLeave('{{ leave.id }}')"
-                    class="disabled-btn"
-                    disabled>
-                ✅ Approve
-                </button>
-                  
+                    <button id="approveBtn-{{ leave.id }}"
+                            onclick="approveLeave('{{ leave.id }}')">
+                        ✅ Approve
+                    </button>
                 {% endif %}
 
                 <button onclick="rejectLeave('{{ leave.id }}')">

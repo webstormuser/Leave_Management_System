@@ -3,6 +3,9 @@ from database.db import init_db, get_connection
 from database.leave_db import get_leaves, get_leave_by_id
 from services.approval_service import handle_approval
 from config.config import HOD_CREDENTIALS, HOD_DEPARTMENT, PRINCIPAL
+import os
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
 from datetime import datetime
 import uuid
@@ -12,6 +15,9 @@ app.secret_key = "secret123"
 
 # ================= INIT DB =================
 init_db()
+
+# ================= CONFIG =================
+UPLOAD_FOLDER = "static/uploads"
 
 
 # ================= HOME =================
@@ -30,13 +36,11 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        # ===== FACULTY =====
         if role == "Faculty" and username == "faculty" and password == "123":
             session["role"] = "Faculty"
             session["user"] = username
             return redirect("/faculty")
 
-        # ===== HOD =====
         elif role == "HOD":
             if username in HOD_CREDENTIALS and password == HOD_CREDENTIALS[username]:
                 session["role"] = "HOD"
@@ -45,7 +49,6 @@ def login():
             else:
                 return render_template("login.html", error="Invalid HOD credentials ❌")
 
-        # ===== PRINCIPAL =====
         elif role == "Principal":
             if username == PRINCIPAL and password == HOD_CREDENTIALS.get(username):
                 session["role"] = "Principal"
@@ -82,7 +85,8 @@ def submit_leave():
         return jsonify({"status": "error", "message": "Unauthorized"}), 403
 
     try:
-        data = request.get_json()
+        data = request.form
+        file = request.files.get("proof")
 
         from_date = datetime.strptime(data['fromDate'], "%Y-%m-%d")
         to_date = datetime.strptime(data['toDate'], "%Y-%m-%d")
@@ -93,6 +97,42 @@ def submit_leave():
         days = (to_date - from_date).days + 1
         leave_id = str(uuid.uuid4())[:8]
 
+        # ================= FILE HANDLING =================
+        # ================= FILE HANDLING =================
+    proof_path = None
+
+    if file and file.filename != "":
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+        # 🔹 Original filename
+        original_name = secure_filename(file.filename)
+
+        # 🔹 Split extension
+        name, ext = os.path.splitext(original_name)
+
+        # 🔹 Clean faculty name
+        faculty_name = data.get("name", "faculty")
+        faculty_name = faculty_name.replace("(HOD)", "")
+        faculty_name = faculty_name.replace("Dr.", "").replace("Mr.", "").replace("Ms.", "").replace("Mrs.", "")
+        faculty_name = faculty_name.strip().replace(" ", "_").replace(".", "")
+
+        # 🔹 Leave type
+        leave_type = data.get("leaveType", "Leave")
+
+        # 🔹 Timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # 🔹 FINAL NAME (ONLY THIS NAME USED)
+        final_name = f"{faculty_name}_{leave_type}_{timestamp}{ext}"
+
+        # 🔹 Save file
+        file_path = os.path.join(UPLOAD_FOLDER, final_name)
+        file.save(file_path)
+
+        # 🔹 Store RELATIVE path (IMPORTANT)
+        proof_path = f"static/uploads/{final_name}"
+
+        # ================= DB INSERT =================
         conn = get_connection()
         c = conn.cursor()
 
@@ -100,9 +140,9 @@ def submit_leave():
         INSERT INTO leaves (
             id, name, department, designation, email, mobile,
             leave_type, from_date, to_date, days,
-            reason, alt_staff, status
+            reason, alt_staff, status, proof
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             leave_id,
             data.get("name"),
@@ -111,12 +151,13 @@ def submit_leave():
             data.get("email"),
             data.get("mobile"),
             data.get("leaveType"),
-            data.get("fromDate")[:10],
-            data.get("toDate")[:10],
+            data.get("fromDate"),
+            data.get("toDate"),
             days,
             data.get("reason"),
             data.get("altStaff"),
-            "Pending Approval"
+            "Pending Approval",
+            proof_path
         ))
 
         conn.commit()
@@ -151,19 +192,8 @@ def hod():
 
     for row in data:
 
-        leave = {
-        "id": row["id"],
-        "name": row["name"],
-        "department": row["department"],
-        "leave_type": row["leave_type"],
-        "from_date": row["from_date"],
-        "to_date": row["to_date"],
-        "reason": row["reason"],
-        "status": row["status"],
-        "email": row["email"]
-        }
+        leave = dict(row)
 
-        # ✅ Flexible match (fixes 0 records issue)
         if dept and leave["department"] and dept.lower() in leave["department"].lower():
 
             total += 1
@@ -206,21 +236,11 @@ def principal():
 
     for row in data:
 
-        leave = {
-            "id": row["id"],
-            "name": row["name"],
-            "department": row["department"],
-            "leave_type": row["leave_type"],
-            "from_date": row["from_date"],
-            "to_date": row["to_date"],
-            "reason": row["reason"],
-            "status": row["status"],
-            "email": row["email"]
-        }
+        leave = dict(row)
 
         total += 1
 
-        if leave["status"] == "Pending Principal Approval":
+        if leave["status"] in ["Pending Approval", "Pending Principal Approval"]:
             pending += 1
             leaves.append(leave)
 
@@ -241,91 +261,41 @@ def principal():
     )
 
 
-# ================= HOD APPROVAL =================
-@app.route("/hod/approve", methods=["POST"])
-def hod_approve():
-
-    if session.get("role") != "HOD":
-        return jsonify({"message": "Unauthorized"}), 403
-
-    leave_id = request.json.get("id")
-    leave = get_leave_by_id(leave_id)
-
-    if not leave:
-        return jsonify({"message": "Leave not found ❌"})
-
-    leave = dict(leave)
-
-    leave["from_date"] = leave.get("from_date") or leave.get("from")
-    leave["to_date"] = leave.get("to_date") or leave.get("to")
-
-    msg = handle_approval("HOD_APPROVE", leave)
-    return jsonify({"message": msg})
-
-
-@app.route("/hod/reject", methods=["POST"])
-def hod_reject():
-
-    if session.get("role") != "HOD":
-        return jsonify({"message": "Unauthorized"}), 403
-
-    leave_id = request.json.get("id")
-    leave = get_leave_by_id(leave_id)
-
-    if not leave:
-        return jsonify({"message": "Leave not found ❌"})
-
-    leave = dict(leave)
-
-    leave["from_date"] = leave.get("from_date") or leave.get("from")
-    leave["to_date"] = leave.get("to_date") or leave.get("to")
-
-    msg = handle_approval("HOD_REJECT", leave)
-    return jsonify({"message": msg})
-
-
 # ================= PRINCIPAL APPROVAL =================
 @app.route("/principal/approve", methods=["POST"])
 def principal_approve():
 
-    # ================= AUTH =================
     if session.get("role") != "Principal":
         return jsonify({"message": "Unauthorized"}), 403
 
     leave_id = request.json.get("id")
     leave = get_leave_by_id(leave_id)
 
-    # ================= VALIDATION =================
     if not leave:
         return jsonify({"message": "Leave not found ❌"}), 404
 
-    # ✅ Convert to dict FIRST (IMPORTANT)
     leave = dict(leave)
 
     leave_type = leave.get("leave_type")
     proof = leave.get("proof")
-    proof_viewed = leave.get("proof_viewed")
 
-    # ================= ML / DL RULE =================
+    # ✅ FIX BOOLEAN ISSUE
+    proof_viewed = int(leave.get("proof_viewed") or 0)
+
     if leave_type in ["ML", "DL"]:
 
-        # ❌ No proof uploaded
         if not proof:
             return jsonify({"message": "Proof required ❌"}), 400
 
-        # ❌ Proof not viewed
         if not proof_viewed:
             return jsonify({"message": "Please view proof before approval ❌"}), 400
 
-    # ================= DATE FIX =================
-    leave["from_date"] = leave.get("from_date") or leave.get("from")
-    leave["to_date"] = leave.get("to_date") or leave.get("to")
-
-    # ================= FINAL APPROVAL =================
     msg = handle_approval("PRINCIPAL_APPROVE", leave)
 
     return jsonify({"message": msg})
 
+
+# ================= MARK PROOF VIEWED =================
 @app.route("/principal/mark_viewed", methods=["POST"])
 def mark_viewed():
 
@@ -343,6 +313,8 @@ def mark_viewed():
 
     return jsonify({"status": "ok"})
 
+
+# ================= PRINCIPAL REJECT =================
 @app.route("/principal/reject", methods=["POST"])
 def principal_reject():
 
@@ -357,10 +329,8 @@ def principal_reject():
 
     leave = dict(leave)
 
-    leave["from_date"] = leave.get("from_date") or leave.get("from")
-    leave["to_date"] = leave.get("to_date") or leave.get("to")
-
     msg = handle_approval("PRINCIPAL_REJECT", leave)
+
     return jsonify({"message": msg})
 
 

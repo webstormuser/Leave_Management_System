@@ -20,7 +20,6 @@ const staffByDepartment = {
         "Ms. Shama Pawar",
         "Mr. Pramod B. Gosavi"
     ],
-
     "Civil Engineering": [
         "Dr. Pankaj R. Punase (HOD)",
         "Dr. Mujahid Husain",
@@ -32,14 +31,12 @@ const staffByDepartment = {
         "Ms. Dipika Mali",
         "Ms. Sushma Mahale"
     ],
-
     "Chemical Engineering": [
         "Dr. Sandeep A. Thakur (HOD)",
         "Ms. Manasi Shashikant Nhalade",
         "Mrs. Sarika S. Pawar",
         "Mr. Vijay P. Sangore"
     ],
-
     "Electrical Engineering": [
         "Mr. M. Mujtahid Ansari (HOD)",
         "Mr. Vijay S. Pawar",
@@ -50,7 +47,6 @@ const staffByDepartment = {
         "Ms. Shaikh Uzma Sabir",
         "Dr. R. R. Karhe"
     ],
-
     "Mechanical Engineering": [
         "Mr. Navneet K. Patil",
         "Dr. Krishna S. Shrivastava",
@@ -60,7 +56,6 @@ const staffByDepartment = {
         "Dr. Ajay R. Bhardwaj",
         "Dr. Dipak C. Talele"
     ],
-
     "First Year Engineering": [
         "Dr. Sandip S. Patil (HOD)",
         "Dr. Kiran S. Patil",
@@ -130,9 +125,7 @@ function autoFillEmail() {
                .toLowerCase()
                .replace(/\s+/g, ".");
 
-    if (!emailField.value) {
-                emailField.value = name + "@sscoetjalgaon.ac.in";
-            }emailField.value = name + "@sscoetjalgaon.ac.in";
+    emailField.value = name + "@sscoetjalgaon.ac.in";
 }
 
 
@@ -162,7 +155,6 @@ function submitLeave() {
         return;
     }
 
-    // ✅ PROOF VALIDATION
     const proofFile = document.getElementById("proof")?.files[0];
 
     if ((leaveType === "ML" || leaveType === "DL") && !proofFile) {
@@ -170,7 +162,6 @@ function submitLeave() {
         return;
     }
 
-    // ✅ USE FORMDATA (IMPORTANT)
     const formData = new FormData();
 
     formData.append("department", department);
@@ -190,13 +181,16 @@ function submitLeave() {
 
     fetch("/submit", {
         method: "POST",
-        credentials: "same-origin",
         body: formData
     })
     .then(res => res.json())
     .then(res => {
-        alert("Submitted ID: " + res.request_id);
-        location.reload();
+        if (res.status === "success") {
+            alert("Submitted ID: " + res.request_id);
+            location.reload();
+        } else {
+            alert(res.message || "Submission failed ❌");
+        }
     })
     .catch(err => {
         alert("Submission failed ❌");
@@ -205,110 +199,66 @@ function submitLeave() {
 }
 
 
-// ================= FILTER =================
-function filterByMonth() {
-    const month = document.getElementById("monthSelect")?.value;
-    const year = document.getElementById("yearSelect")?.value;
-
-    const cards = document.querySelectorAll(".record-card");
-    let count = 0;
-
-    cards.forEach(card => {
-        const fromDate = card.getAttribute("data-from");
-
-        if (!fromDate) {
-            card.style.display = "none";
-            return;
-        }
-
-        const [cardYear, cardMonth] = fromDate.split("-");
-
-        if (
-            (month === "" || cardMonth === month) &&
-            (year === "" || cardYear === year)
-        ) {
-            card.style.display = "block";
-            count++;
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    document.getElementById("filterResult").innerText =
-        count === 0
-        ? "No records found ❌"
-        : count + " record(s) found ✅";
-}
-
-
-// ================= RESET =================
-function resetFilter() {
-    document.getElementById("monthSelect").value = "";
-    document.getElementById("yearSelect").value = "";
-
-    document.querySelectorAll(".record-card").forEach(card => {
-        card.style.display = "block";
-    });
-
-    document.getElementById("filterResult").innerText = "";
-}
-
-
 // ================= APPROVE =================
 function approveLeave(id) {
+
     let url = window.location.pathname.includes("principal")
         ? "/principal/approve"
         : "/hod/approve";
 
     fetch(url, {
         method: "POST",
-        credentials: "same-origin",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ id })
     })
     .then(res => res.json())
     .then(data => {
-        alert(data.message);
+        alert(data.message || "Done");
         location.reload();
-    });
+    })
+    .catch(err => console.error(err));
 }
 
 
 // ================= REJECT =================
 function rejectLeave(id) {
+
     let url = window.location.pathname.includes("principal")
         ? "/principal/reject"
         : "/hod/reject";
 
     fetch(url, {
         method: "POST",
-        credentials: "same-origin",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ id })
     })
     .then(res => res.json())
     .then(data => {
-        alert(data.message);
+        alert(data.message || "Rejected");
         location.reload();
-    });
+    })
+    .catch(err => console.error(err));
 }
-//==============================
+
+
+// ================= MARK PROOF VIEWED =================
 function markProofViewed(leaveId) {
 
     fetch("/principal/mark_viewed", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ id: leaveId })
     })
     .then(res => res.json())
     .then(data => {
-
         if (data.status === "ok") {
             let btn = document.getElementById("approveBtn-" + leaveId);
-            btn.disabled = false;
-            btn.classList.remove("disabled-btn");
+            if (btn) {
+                btn.disabled = false;
+                btn.classList.remove("disabled-btn");
+                btn.innerText = "✅ Approve";
+            }
         }
-    });
+    })
+    .catch(err => console.error(err));
 }

@@ -198,3 +198,109 @@
 2026-04-02 16:55:23,102 - INFO - Fetched all leave records
 2026-04-02 17:01:00,821 - INFO - Fetched all leave records
 2026-04-02 17:01:04,066 - INFO - Fetched all leave records
+2026-04-04 10:27:15,487 - INFO - Fetched all leave records
+2026-04-04 10:28:15,493 - INFO - Fetched all leave records
+2026-04-04 10:41:00,733 - INFO - Fetched all leave records
+2026-04-04 10:42:05,471 - INFO - Fetched all leave records
+2026-04-04 10:42:20,056 - INFO - Fetched all leave records
+2026-04-04 10:43:21,772 - INFO - Fetched all leave records
+2026-04-04 10:47:31,573 - INFO - Fetched all leave records
+2026-04-04 10:47:46,438 - INFO - Fetched all leave records
+2026-04-04 10:47:50,178 - INFO - Fetched all leave records
+2026-04-04 10:47:50,506 - INFO - Fetched all leave records
+2026-04-04 10:47:50,755 - INFO - Fetched all leave records
+2026-04-04 10:47:50,945 - INFO - Fetched all leave records
+2026-04-04 10:48:08,778 - INFO - Fetched all leave records
+2026-04-04 10:48:09,050 - INFO - Fetched all leave records
+2026-04-04 10:48:09,291 - INFO - Fetched all leave records
+2026-04-04 10:48:09,489 - INFO - Fetched all leave records
+2026-04-04 10:48:09,659 - INFO - Fetched all leave records
+2026-04-04 10:48:09,858 - INFO - Fetched all leave records
+2026-04-04 10:48:10,098 - INFO - Fetched all leave records
+2026-04-04 10:48:10,297 - INFO - Fetched all leave records
+2026-04-04 10:48:10,482 - INFO - Fetched all leave records
+2026-04-04 10:48:10,674 - INFO - Fetched all leave records
+2026-04-04 11:01:10,707 - INFO - Fetched all leave records
+2026-04-04 11:01:17,954 - INFO - Fetched leave | ReqID: d8e884ec
+2026-04-04 11:01:17,955 - INFO - Processing HOD_APPROVE | ReqID: d8e884ec
+2026-04-04 11:01:17,955 - INFO - Leave Data: {'id': 'd8e884ec', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': 'Practical exam', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads\\cc1966f6-4006-4642-b179-c99716cb7e24_New_Text_Document.txt', 'proof_viewed': 0}
+2026-04-04 11:01:19,618 - INFO - Fetched leave | ReqID: 2e9367b2
+2026-04-04 11:01:19,619 - INFO - Processing HOD_APPROVE | ReqID: 2e9367b2
+2026-04-04 11:01:19,619 - INFO - Leave Data: {'id': '2e9367b2', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-20', 'to_date': '2026-04-21', 'reason': '', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads\\27c33520-9ff8-4290-9ced-4d20f6ab4d3d_New_Text_Document.txt', 'proof_viewed': 0}
+2026-04-04 11:01:21,018 - INFO - Fetched all leave records
+2026-04-04 11:01:51,428 - INFO - Fetched all leave records
+2026-04-04 11:03:15,098 - INFO - Fetched leave | ReqID: d8e884ec
+2026-04-04 11:03:15,099 - INFO - Processing PRINCIPAL_REJECT | ReqID: d8e884ec
+2026-04-04 11:03:15,099 - INFO - Leave Data: {'id': 'd8e884ec', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': 'Practical exam', 'status': 'Pending Principal Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads\\cc1966f6-4006-4642-b179-c99716cb7e24_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:03:16,695 - INFO - Fetched all leave records
+2026-04-04 11:03:17,801 - INFO - Fetched leave | ReqID: 2e9367b2
+2026-04-04 11:03:17,801 - INFO - Processing PRINCIPAL_REJECT | ReqID: 2e9367b2
+2026-04-04 11:03:17,801 - INFO - Leave Data: {'id': '2e9367b2', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-20', 'to_date': '2026-04-21', 'reason': '', 'status': 'Pending Principal Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads\\27c33520-9ff8-4290-9ced-4d20f6ab4d3d_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:03:19,521 - INFO - Fetched all leave records
+2026-04-04 11:10:28,573 - INFO - Fetched all leave records
+2026-04-04 11:10:29,773 - INFO - Fetched all leave records
+2026-04-04 11:10:30,260 - INFO - Fetched all leave records
+2026-04-04 11:11:34,978 - INFO - Fetched all leave records
+2026-04-04 11:12:07,385 - INFO - Fetched all leave records
+2026-04-04 11:12:48,125 - INFO - Fetched all leave records
+2026-04-04 11:12:58,797 - INFO - Fetched all leave records
+2026-04-04 11:13:02,892 - INFO - Fetched all leave records
+2026-04-04 11:32:57,420 - INFO - Fetched all leave records
+2026-04-04 11:35:20,594 - INFO - Fetched all leave records
+2026-04-04 11:35:25,975 - INFO - Fetched all leave records
+2026-04-04 11:35:26,196 - INFO - Fetched all leave records
+2026-04-04 11:35:26,410 - INFO - Fetched all leave records
+2026-04-04 11:35:26,621 - INFO - Fetched all leave records
+2026-04-04 11:35:26,835 - INFO - Fetched all leave records
+2026-04-04 11:35:27,012 - INFO - Fetched all leave records
+2026-04-04 11:35:27,196 - INFO - Fetched all leave records
+2026-04-04 11:35:27,396 - INFO - Fetched all leave records
+2026-04-04 11:35:38,064 - INFO - Fetched all leave records
+2026-04-04 11:35:38,607 - INFO - Fetched all leave records
+2026-04-04 11:37:19,646 - INFO - Fetched all leave records
+2026-04-04 11:37:20,150 - INFO - Fetched all leave records
+2026-04-04 11:37:20,356 - INFO - Fetched all leave records
+2026-04-04 11:43:44,577 - INFO - Fetched all leave records
+2026-04-04 11:43:45,350 - INFO - Fetched all leave records
+2026-04-04 11:43:45,557 - INFO - Fetched all leave records
+2026-04-04 11:43:48,958 - INFO - Fetched all leave records
+2026-04-04 11:43:49,262 - INFO - Fetched all leave records
+2026-04-04 11:43:49,460 - INFO - Fetched all leave records
+2026-04-04 11:43:51,285 - INFO - Fetched leave | ReqID: 4baddf69
+2026-04-04 11:43:51,285 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 4baddf69
+2026-04-04 11:43:51,285 - INFO - Leave Data: {'id': '4baddf69', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-20', 'to_date': '2026-04-21', 'reason': 'university exams', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads/4e6f12c9-4295-476a-a67e-e6daadd7b6d2_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:43:51,746 - INFO - Fetched leave | ReqID: 4baddf69
+2026-04-04 11:43:51,746 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 4baddf69
+2026-04-04 11:43:51,746 - INFO - Leave Data: {'id': '4baddf69', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-20', 'to_date': '2026-04-21', 'reason': 'university exams', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads/4e6f12c9-4295-476a-a67e-e6daadd7b6d2_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:43:51,779 - INFO - Fetched leave | ReqID: 4baddf69
+2026-04-04 11:43:51,779 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 4baddf69
+2026-04-04 11:43:51,779 - INFO - Leave Data: {'id': '4baddf69', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-20', 'to_date': '2026-04-21', 'reason': 'university exams', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Shama Pawar', 'proof': 'static/uploads/4e6f12c9-4295-476a-a67e-e6daadd7b6d2_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:43:54,436 - INFO - Fetched all leave records
+2026-04-04 11:43:54,479 - INFO - Fetched all leave records
+2026-04-04 11:46:03,338 - INFO - Fetched all leave records
+2026-04-04 11:46:20,176 - INFO - Fetched all leave records
+2026-04-04 11:46:35,880 - INFO - Fetched all leave records
+2026-04-04 11:46:37,163 - INFO - Fetched leave | ReqID: d8788362
+2026-04-04 11:46:37,163 - INFO - Processing PRINCIPAL_APPROVE | ReqID: d8788362
+2026-04-04 11:46:37,163 - INFO - Leave Data: {'id': 'd8788362', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'ML', 'from_date': '2026-04-29', 'to_date': '2026-04-30', 'reason': 'Medical health issue', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Mr. Pramod B. Gosavi', 'proof': 'static/uploads/71f496b5-b0d7-4cb9-8eb0-a7b7e1f8cd76_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 11:46:39,303 - INFO - Fetched all leave records
+2026-04-04 11:49:43,130 - INFO - Fetched all leave records
+2026-04-04 11:49:43,966 - INFO - Fetched all leave records
+2026-04-04 11:49:44,438 - INFO - Fetched all leave records
+2026-04-04 13:46:50,211 - INFO - Fetched all leave records
+2026-04-04 13:47:03,916 - INFO - Fetched all leave records
+2026-04-04 13:47:16,389 - INFO - Fetched all leave records
+2026-04-04 13:47:18,850 - INFO - Fetched leave | ReqID: 45061db9
+2026-04-04 13:47:18,850 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 45061db9
+2026-04-04 13:47:18,850 - INFO - Leave Data: {'id': '45061db9', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': '', 'status': 'Pending Approval', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Pooja Khandar', 'proof': 'static/uploads/b45e76bc-1abe-4cef-90fa-f6127688e4e5_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 13:47:19,400 - INFO - Fetched leave | ReqID: 45061db9
+2026-04-04 13:47:19,400 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 45061db9
+2026-04-04 13:47:19,400 - INFO - Leave Data: {'id': '45061db9', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': '', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Pooja Khandar', 'proof': 'static/uploads/b45e76bc-1abe-4cef-90fa-f6127688e4e5_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 13:47:19,877 - INFO - Fetched leave | ReqID: 45061db9
+2026-04-04 13:47:19,877 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 45061db9
+2026-04-04 13:47:19,877 - INFO - Leave Data: {'id': '45061db9', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': '', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Pooja Khandar', 'proof': 'static/uploads/b45e76bc-1abe-4cef-90fa-f6127688e4e5_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 13:47:19,878 - INFO - Fetched leave | ReqID: 45061db9
+2026-04-04 13:47:19,878 - INFO - Processing PRINCIPAL_APPROVE | ReqID: 45061db9
+2026-04-04 13:47:19,878 - INFO - Leave Data: {'id': '45061db9', 'name': 'Ms. Ashwini A. Kakde', 'department': 'Computer Engineering', 'leave_type': 'DL', 'from_date': '2026-04-13', 'to_date': '2026-04-14', 'reason': '', 'status': 'Approved by Principal', 'email': 'kakdeashwini12@gmail.com', 'days': 2, 'designation': 'Assistant Professor', 'mobile': '9175330686', 'alt_staff': 'Ms. Pooja Khandar', 'proof': 'static/uploads/b45e76bc-1abe-4cef-90fa-f6127688e4e5_New_Text_Document.txt', 'proof_viewed': 1}
+2026-04-04 13:47:22,264 - INFO - Fetched all leave records
+2026-04-04 13:47:22,311 - INFO - Fetched all leave records

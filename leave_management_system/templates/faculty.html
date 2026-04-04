@@ -24,21 +24,22 @@
 
         <h3>📝 Apply for Leave</h3>
 
-        <form id="leaveForm">
+        <!-- ✅ IMPORTANT: enctype added -->
+        <form id="leaveForm" enctype="multipart/form-data">
 
         <!-- ROW 1 -->
         <div class="form-row">
 
             <div>
                 <label>Department</label>
-                <select id="department" onchange="updateFaculty()">
+                <select id="department" name="department" onchange="updateFaculty()">
                     <option value="">-- Select Department --</option>
                 </select>
             </div>
 
             <div>
                 <label>Name</label>
-                <select id="name" onchange="autoFillEmail()">
+                <select id="name" name="name" onchange="autoFillEmail()">
                     <option value="">-- Select Name --</option>
                 </select>
             </div>
@@ -50,7 +51,7 @@
 
             <div>
                 <label>Designation</label>
-                <select id="designation">
+                <select id="designation" name="designation">
                     <option>Assistant Professor</option>
                     <option>Associate Professor</option>
                     <option>Head of the Department</option>
@@ -59,8 +60,7 @@
 
             <div>
                 <label>Email</label>
-                <input type="email" id="email" placeholder="Enter your email">
-                
+                <input type="email" id="email" name="email" placeholder="Enter your email">
             </div>
 
         </div>
@@ -70,13 +70,13 @@
 
             <div>
                 <label>Mobile</label>
-                <input type="tel" id="mobile" placeholder="Enter mobile number" maxlength="10">
+                <input type="tel" id="mobile" name="mobile" placeholder="Enter mobile number" maxlength="10">
                 <small style="color:gray;">You will receive leave status on email & mobile</small>
             </div>
 
             <div>
                 <label>Leave Type</label>
-                <select id="leaveType" onchange="toggleProof()">
+                <select id="leaveType" name="leaveType" onchange="toggleProof()">
                     <option>CL</option>
                     <option>LWP</option>
                     <option>ML</option>
@@ -88,10 +88,11 @@
 
         </div>
 
-        <!-- ✅ PROOF UPLOAD (DYNAMIC) -->
+        <!-- ✅ PROOF UPLOAD -->
         <div id="proofSection" style="display:none; margin-top:10px;">
             <label>Upload Proof (Required for ML / DL)</label>
-            <input type="file" id="proof">
+            <!-- ✅ IMPORTANT: name added -->
+            <input type="file" id="proof" name="proof">
         </div>
 
         <!-- ROW 4 -->
@@ -99,26 +100,27 @@
 
             <div>
                 <label>From Date</label>
-                <input type="date" id="fromDate" required>
+                <input type="date" id="fromDate" name="fromDate" required>
             </div>
 
             <div>
                 <label>To Date</label>
-                <input type="date" id="toDate" required>
+                <input type="date" id="toDate" name="toDate" required>
             </div>
 
         </div>
 
         <label>Reason</label>
-        <textarea id="reason"></textarea>
+        <textarea id="reason" name="reason"></textarea>
 
         <label>Alternate Staff</label>
-        <select id="altStaff">
+        <select id="altStaff" name="altStaff">
             <option value="">-- Select Alternate Staff --</option>
         </select>
 
         <br>
 
+        <!-- Keep type=button because we will use JS -->
         <button type="button" class="primary-btn" onclick="submitLeave()">
             🚀 Submit Leave
         </button>
