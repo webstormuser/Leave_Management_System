@@ -205,3 +205,19 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Ignore config files with credentials
+config/config.py
+
+# Ignore environment
+leave_env/
+
+# Ignore database
+*.db
+
+# Ignore uploads
+static/uploads/
+
+# Python cache
+__pycache__/
+*.pyc
