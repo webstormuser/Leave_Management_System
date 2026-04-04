@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Recurrence Solver - Recursion Tree Animation</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+    body{margin:0;background:#0f172a;color:#e6eef8;display:flex;flex-direction:column;height:100vh}
+    header{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.04);background:linear-gradient(90deg, rgba(15,23,42,0.9), rgba(2,6,23,0.7));}
+    .title{font-size:18px;font-weight:600}
+    .subtitle{font-size:13px;color:#9fb0d8;margin-top:4px}
+    main{display:flex;gap:12px;padding:12px;flex:1;overflow:hidden}
+    .panel{background:#071029;border-radius:10px;padding:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
+    .left{width:480px;display:flex;flex-direction:column}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+    label{font-size:13px;color:#bcd3f0}
+    input,select{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
+    .buttons{display:flex;gap:8px;margin-top:8px}
+    button{padding:8px 12px;border-radius:8px;border:0;background:#1f6feb;color:white;cursor:pointer}
+    button.secondary{background:#2b3b5a}
+    .explain{margin-top:10px;font-size:13px;color:#cde}
+    .canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:8px}
+    svg{width:100%;height:100%}
+    .right{flex:1;min-width:360px;display:flex;flex-direction:column}
+    .card{padding:10px;margin-bottom:10px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:6px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left}
+    .summary{background:linear-gradient(180deg, rgba(10,20,35,0.9), rgba(3,10,20,0.9));border-radius:8px;padding:10px}
+    .small{font-size:12px;color:#9fb0d8}
+    footer{padding:8px 12px;text-align:right;font-size:12px;color:#9fb0d8}
+    .highlight{color:#7ef9a6;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">Recurrence Relation — Recursion Tree Animation</div>
+    <div class="subtitle">Interactive visualization of recursion-tree + Master theorem conclusion. Example: T(n)=2T(n/2)+n</div>
+  </header>
+  <main>
+    <div class="panel left">
+      <div class="controls">
+        <div>
+          <label>a (number of subproblems)</label>
+          <input id="input-a" type="number" min="1" step="1" value="2">
+        </div>
+        <div>
+          <label>b (reduction factor)</label>
+          <input id="input-b" type="number" min="2" step="1" value="2">
+        </div>
+        <div>
+          <label>f(n) = n^c  → c</label>
+          <input id="input-c" type="number" step="0.1" value="1">
+        </div>
+        <div>
+          <label>n (problem size)</label>
+          <input id="input-n" type="number" min="2" step="1" value="1024">
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="btn-play">Play</button>
+        <button id="btn-pause" class="secondary">Pause</button>
+        <button id="btn-step" class="secondary">Step</button>
+        <button id="btn-reset" class="secondary">Reset</button>
+      </div>
+      <div class="explain card">
+        <div><strong>How it works</strong>: The tool draws the recursion tree levels. Each level i has a^i nodes of size n/b^i, cost per node = (n/b^i)^c, and level cost = a^i * (n/b^i)^c = n^c * (a / b^c)^i.</div>
+        <div class="small" style="margin-top:6px">Play animates levels appearing and shows the partial sum. It also computes log_b(a) and compares it with c to give the Master-theorem case.</div>
+      </div>
+      <div class="canvas-wrap panel" style="margin-top:10px;flex:1;min-height:340px;">
+        <svg id="svg-canvas" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+
+    <div class="panel right">
+      <div class="card summary">
+        <div><strong>Current recurrence</strong></div>
+        <div id="recurrence-text" style="margin-top:6px">T(n) = 2 T(n/2) + n</div>
+        <div class="small" style="margin-top:8px">Computed values:</div>
+        <div style="margin-top:8px">
+          <div>log_b(a) = <span id="logba" class="highlight">1</span></div>
+          <div>c = <span id="cval" class="highlight">1</span></div>
+</html>
